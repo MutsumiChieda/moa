@@ -3,7 +3,6 @@ from typing import Optional, Any
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-import pytorch_lightning as pl
 import pandas as pd
 import model_parts as parts
 

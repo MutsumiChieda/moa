@@ -1,0 +1,1 @@
+[10-04_2104] best_params: {'num_layers': 3, 'hidden_size': 1284, 'dropout': 0.42154377668667864, 'learning_rate': 0.00016863635017044947}

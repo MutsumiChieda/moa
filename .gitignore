@@ -162,6 +162,9 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/macos,python,jupyternotebook
 
+# pytorch state dict
+*pt
+
 # pytorch lightning checkpoint
 *.ckpt
 log/default/

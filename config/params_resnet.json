@@ -1,0 +1,4 @@
+{
+    "zero_init_residual": true,
+    "width_per_group": 64
+}
