@@ -94,7 +94,7 @@ def run_training(fold, params, save_model=False):
     if save_model:
         now = datetime.now()
         now = str(now)[5:17].replace(" ", "_").replace(":", "")
-        filename = f"weight/model{now}.pt"
+        filename = f"weight/model{now}/fold{fold}.pt"
         torch.save(model.model.state_dict(), filename)
         print("model saved at:", filename)
 
