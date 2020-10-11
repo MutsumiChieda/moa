@@ -33,7 +33,6 @@ def preprocess():
 
     # Create aux target
     # `nsc_labels` means # of labels found in non-scored train set
-    # which is not available in test set.
     non_scored_df = pd.read_csv("input/lish-moa/train_targets_nonscored.csv")
     targets_non_scored = non_scored_df.drop("sig_id", axis=1).to_numpy().sum(axis=1)
     non_scored_df.loc[:, "nsc_labels"] = targets_non_scored
