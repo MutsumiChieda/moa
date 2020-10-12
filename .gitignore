@@ -174,3 +174,4 @@ log/default/
 
 # no eda plot for now
 *.png
+*.pdf
