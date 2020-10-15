@@ -69,8 +69,8 @@ class Engine:
         loss_final = 0
         for data in dataloader:
             self.optimizer.zero_grad()
-            inputs = data["x"].to(self.device)
-            targets = data["y"].to(self.device)
+            inputs = data["x"].to(self.device, non_blocking=True)
+            targets = data["y"].to(self.device, non_blocking=True)
             outputs = self.model(inputs)
             loss = self.loss_fn(targets, outputs)
             loss.backward()
@@ -82,8 +82,8 @@ class Engine:
         self.model.eval()
         loss_final = 0
         for data in dataloader:
-            inputs = data["x"].to(self.device)
-            targets = data["y"].to(self.device)
+            inputs = data["x"].to(self.device, non_blocking=True)
+            targets = data["y"].to(self.device, non_blocking=True)
             outputs = self.model(inputs)
             loss = self.loss_fn(targets, outputs)
             loss_final += loss.item()
