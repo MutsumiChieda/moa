@@ -1,0 +1,18 @@
+{
+    "nn_params": {
+        "dropout": 0.2,
+        "num_layers": 3,
+        "hidden_size": 512,
+        "activation": "prelu",
+        "batchnorm": true
+    },
+    "optimizer": "SGD",
+    "optim_params": {
+        "lr": 0.05,
+        "momentum": 0.3
+    },
+    "scheduler": "ReduceLROnPlateau",
+    "scdl_params": {
+        "threshold": 1e-05
+    }
+}
