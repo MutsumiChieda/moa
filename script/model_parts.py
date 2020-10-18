@@ -6,6 +6,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 import torch.utils.checkpoint as cp
 from torch.jit.annotations import List
+
 # from torch_geometric.nn import GINConv, global_add_pool
 
 # Parts for ResNet
