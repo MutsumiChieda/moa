@@ -15,7 +15,9 @@ lgbm,,v1,0.017273,0.017282,0.017357,0.017229,0.008193,0.008321,0.008627,0.008132
 lgbm,v1,platt scaling,0.017675,,,,0.012781
 tabnet,,baseline,0.018776,0.018814,0.018502,0.019109
 tabnet,,v1,0.015435,,,,,,,,0.01858
-stacked-tabnet,,baseline,0.0155551
+stacked-tabnet,,Seed5CV10,0.0155551
+stacked-tabnet,,Seed5CV4,0.016899
+stacked-tabnet,Seed5CV4,output bias,0.015643
 kernel-ridge,,baseline,0.020296,0.020282,0.020220,0.020408,0.017251,0.017230,0.017217,0.017251
 kernel-ridge,,platt scaling,0.017735,,,,0.017234
 kernel-ridge,,nystroem,0.022269,0.022238,0.022139,0.022193,0.022179,0.022182,0.022215,0.022204
