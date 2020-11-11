@@ -1,6 +1,7 @@
 import sys
 from os.path import exists
 import pandas as pd
+from sklearn.model_selection import KFold
 from iterstrat.ml_stratifiers import MultilabelStratifiedKFold
 
 sys.path.append("script/")
@@ -8,19 +9,67 @@ import utils
 import models
 
 
+# def split_data():
+#     print("Split data")
+#     path_fold = "input/folds/train_folds.csv"
+#     if not exists(path_fold):
+#         df = pd.read_csv("input/lish-moa/train_targets_scored.csv")
+#         df.loc[:, "kfold"] = -1
+#         df = df.sample(frac=1).reset_index(drop=True)
+#         targets = df.drop("sig_id", axis=1).values
+
+#         mskf = MultilabelStratifiedKFold(n_splits=5)
+#         for fold_, (tr_, va_) in enumerate(mskf.split(X=df, y=targets)):
+#             df.loc[va_, "kfold"] = fold_
+#         df.to_csv(path_fold, index=False)
+#         print(f"Created: {path_fold}")
+#     else:
+#         print("Skipped: already exists")
+
+
 def split_data():
+    SEED, FOLDS = 42, 5
+
     print("Split data")
     path_fold = "input/folds/train_folds.csv"
-    if not exists(path_fold):
-        df = pd.read_csv("input/lish-moa/train_targets_scored.csv")
-        df.loc[:, "kfold"] = -1
-        df = df.sample(frac=1).reset_index(drop=True)
-        targets = df.drop("sig_id", axis=1).values
 
-        mskf = MultilabelStratifiedKFold(n_splits=5)
-        for fold_, (tr_, va_) in enumerate(mskf.split(X=df, y=targets)):
-            df.loc[va_, "kfold"] = fold_
-        df.to_csv(path_fold, index=False)
+    if not exists(path_fold):
+        scored = pd.read_csv("input/lish-moa/train_targets_scored.csv")
+        drug = pd.read_csv("input/lish-moa/train_drug.csv")
+        targets = scored.columns[1:]
+        scored = scored.merge(drug, on="sig_id", how="left")
+
+        # LOCATE DRUGS
+        vc = scored.drug_id.value_counts()
+        vc1 = vc.loc[vc <= 18].index.sort_values()
+        vc2 = vc.loc[vc > 18].index.sort_values()
+
+        # STRATIFY DRUGS 18X OR LESS
+        dct1 = {}
+        dct2 = {}
+        skf = MultilabelStratifiedKFold(n_splits=FOLDS, shuffle=True, random_state=SEED)
+        tmp = scored.groupby("drug_id")[targets].mean().loc[vc1]
+        for fold, (idxT, idxV) in enumerate(skf.split(tmp, tmp[targets])):
+            dd = {k: fold for k in tmp.index[idxV].values}
+            dct1.update(dd)
+
+        # STRATIFY DRUGS MORE THAN 18X
+        skf = MultilabelStratifiedKFold(n_splits=FOLDS, shuffle=True, random_state=SEED)
+        tmp = scored.loc[scored.drug_id.isin(vc2)].reset_index(drop=True)
+        for fold, (idxT, idxV) in enumerate(skf.split(tmp, tmp[targets])):
+            dd = {k: fold for k in tmp.sig_id[idxV].values}
+            dct2.update(dd)
+
+        # ASSIGN FOLDS
+        scored["kfold"] = scored.drug_id.map(dct1)
+        scored.loc[scored.kfold.isna(), "kfold"] = scored.loc[scored.kfold.isna(), "sig_id"].map(
+            dct2
+        )
+        scored.kfold = scored.kfold.astype("int8")
+
+        # SAVE FOLDS
+        scored.drop("drug_id", axis=1, inplace=True)
+        scored.to_csv(path_fold, index=False)
         print(f"Created: {path_fold}")
     else:
         print("Skipped: already exists")
