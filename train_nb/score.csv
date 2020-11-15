@@ -1,28 +1,27 @@
-model,impl_from,version,loss0,loss1,loss2,loss3,trloss0,trloss1,trloss2,trloss3,lbscore
-LB 1st place,,benchmark,,,,,,,,,0.01805
-LB Gold,,benchmark,,,,,,,,,0.01827
-LB Silver,,benchmark,,,,,,,,,0.01837
-LB Bronze,,benchmark,,,,,,,,,0.01842
-mlp,,baseline,0.02469,0.02521,0.02455,0.02428,0.02051,0.02094,0.02045,0.02029
-mlp,,output bias,,,,,,,,,0.01942
-lgbm,,baseline,0.018077,0.018033,0.018248,0.018205
-lgbm,,selective features,0.017967,,,,0.0073371
+model,impl_from,version,loss0,loss1,loss2,loss3,loss4,trloss0,trloss1,trloss2,trloss3,trloss4,lbscore
+LB 1st place,,benchmark,,,,,,,,,,,0.01805
+LB Gold,,benchmark,,,,,,,,,,,0.01827
+LB Silver,,benchmark,,,,,,,,,,,0.01837
+LB Bronze,,benchmark,,,,,,,,,,,0.01842
+mlp,,baseline,0.02469,0.02521,0.02455,0.02428,,0.02051,0.02094,0.02045,0.02029
+mlp,,output bias,0.01654,0.01624,0.01640,0.01613,0.01659,0.01500,0.01507,0.01419,0.01405,0.01498,0.02001
+lgbm,,baseline,0.018077,0.018033,0.018248,0.018205,
+lgbm,,selective features,0.017967,,,,,0.0073371
 lgbm,,pca feats only,0.018204,0.018229,0.018422,0.018384
 lgbm,pca feats only,diff,0.018174,0.018151,0.018439,0.018347
 lgbm,,pca feats,0.017959,0.017932,0.018135,0.018111
-lgbm,pca feats,diff,0.017958,,0.018139,
-lgbm,pca feats,selective features,0.017884,,,,0.007216,
-lgbm,,v1,0.017273,0.017282,0.017357,0.017229,0.008193,0.008321,0.008627,0.008132
-lgbm,v1,platt scaling,0.017675,,,,0.012781
+lgbm,pca feats,diff,0.017958,0.018139
+lgbm,pca feats,selective features,0.017884,,,,,0.007216,
+lgbm,,v1,0.017273,0.017282,0.017357,0.017229,,0.008193,0.008321,0.008627,0.008132
+lgbm,v1,platt scaling,0.017675,,,,,0.012781
 tabnet,,baseline,0.018776,0.018814,0.018502,0.019109
-tabnet,,v1,0.015435,,,,,,,,0.01858
-stacked-tabnet,,Seed5CV10,0.0155551,,,,,,0.01942
-stacked-tabnet,,Seed5CV4,0.016899
-stacked-tabnet,Seed5CV10,output bias,0.015500,,,,,,,,0.01930
-kernel-ridge,,baseline,0.020296,0.020282,0.020220,0.020408,0.017251,0.017230,0.017217,0.017251
-kernel-ridge,,platt scaling,0.017735,,,,0.017234
-kernel-ridge,,nystroem,0.022269,0.022238,0.022139,0.022193,0.022179,0.022182,0.022215,0.022204
-kernel-ridge,platt scaling,nystroem,0.022209,,,,0.011240
-nuSVC,,baseline(infeasible),1,,,
-rapids-svm,,baseline,0.094402,
+tabnet,,v1,0.017525,,,,,,,,,,0.01856
+stacked-tabnet,,Seed5CV10,0.016120,,,,,,,,,,0.01920
+stacked-tabnet,Seed5CV10,output bias,0.015500,,,,,,,,,,0.01930
+kernel-ridge,,baseline,0.020296,0.020282,0.020220,0.020408,,0.017251,0.017230,0.017217,0.017251
+kernel-ridge,,platt scaling,0.017735,,,,,0.017234
+kernel-ridge,,nystroem,0.022269,0.022238,0.022139,0.022193,,0.022179,0.022182,0.022215,0.022204
+kernel-ridge,platt scaling,nystroem,0.022209,,,,,0.011240
+nuSVC,,baseline(infeasible),1
+rapids-svm,,baseline,0.094402
 rapids-svm,,platt scaling,0.017024
