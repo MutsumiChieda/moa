@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn import functional as F
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -36,6 +37,20 @@ class TestMoaDataset:
         return {
             "x": torch.tensor(self.dataset[item, :], dtype=torch.float),
         }
+
+
+class LabelSmoothingCrossEntropy(nn.Module):
+    def __init__(self):
+        super(LabelSmoothingCrossEntropy, self).__init__()
+
+    def forward(self, x, target, smoothing=0.2):
+        confidence = 1.0 - smoothing
+        logprobs = F.log_softmax(x, dim=-1)
+        nll_loss = -logprobs.gather(dim=-1, index=target.unsqueeze(1))
+        nll_loss = nll_loss.squeeze(1)
+        smooth_loss = -logprobs.mean(dim=-1)
+        loss = confidence * nll_loss + smoothing * smooth_loss
+        return loss.mean()
 
 
 def add_dummies(data, col):
