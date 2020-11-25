@@ -86,7 +86,7 @@ class Engine:
             self.optimizer.zero_grad()
             inputs = data["x"].to(self.device, non_blocking=True)
             targets = data["y"].to(self.device, non_blocking=True)
-            outputs = self.model(inputs)
+            outputs = self.model(inputs) + 1e-12
             loss = self.loss_fn(targets, outputs)
             loss.backward()
             self.optimizer.step()
@@ -99,7 +99,7 @@ class Engine:
         for data in dataloader:
             inputs = data["x"].to(self.device, non_blocking=True)
             targets = data["y"].to(self.device, non_blocking=True)
-            outputs = self.model(inputs)
+            outputs = self.model(inputs) + 1e-12
             loss = self.loss_fn(targets, outputs)
             loss_final += loss.item()
         return loss_final / len(dataloader)
