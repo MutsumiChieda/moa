@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -63,7 +64,9 @@ def add_dummies(data, col):
 
 
 def process_data(df):
-    df = add_dummies(df, "cp_time")
+    df["cp_time"] = df["cp_time"].map({24: 0, 48: 0.5, 72: 1}).astype(np.float16)
+    # df = add_dummies(df, "cp_time")
+    # df["cp_dose"] = df["cp_dose"].map({"D1": -1, "D2": 1}).astype(np.int8)
     df = add_dummies(df, "cp_dose")
     df = add_dummies(df, "cp_type")
     return df
